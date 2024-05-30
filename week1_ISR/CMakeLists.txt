@@ -1,17 +1,3 @@
-# == DO NEVER EDIT THE NEXT LINES for Raspberry Pi Pico VS Code Extension to work ==
-if(WIN32)
-   set(USERHOME $ENV{USERPROFILE})
-else()
-    set(USERHOME $ENV{HOME})
-endif()
-set(PICO_SDK_PATH ${USERHOME}/.pico-sdk/sdk/1.5.1)
-set(PICO_TOOLCHAIN_PATH ${USERHOME}/.pico-sdk/toolchain/13_2_Rel1)
-if(WIN32)
-    set(pico-sdk-tools_DIR ${USERHOME}/.pico-sdk/tools/1.5.1)
-    include(${pico-sdk-tools_DIR}/pico-sdk-tools-config.cmake)
-    include(${pico-sdk-tools_DIR}/pico-sdk-tools-config-version.cmake)
-endif()
-# ====================================================================================
 # Generated Cmake Pico project file
 
 cmake_minimum_required(VERSION 3.13)
@@ -46,31 +32,31 @@ if (PICO_SDK_VERSION_STRING VERSION_LESS "1.4.0")
   message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.4.0 (or later) required. Your version is ${PICO_SDK_VERSION_STRING}")
 endif()
 
-project(week1_uart C CXX ASM)
+project(week1_ISR C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(week1_uart week1_uart.c )
+add_executable(week1_ISR week1_ISR.c )
 
-pico_set_program_name(week1_uart "week1_uart")
-pico_set_program_version(week1_uart "0.1")
+pico_set_program_name(week1_ISR "week1_ISR")
+pico_set_program_version(week1_ISR "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(week1_uart 1)
-pico_enable_stdio_usb(week1_uart 0)
+pico_enable_stdio_uart(week1_ISR 0)
+pico_enable_stdio_usb(week1_ISR 0)
 
 # Add the standard library to the build
-target_link_libraries(week1_uart
+target_link_libraries(week1_ISR
         pico_stdlib)
 
 # Add the standard include files to the build
-target_include_directories(week1_uart PRIVATE
+target_include_directories(week1_ISR PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}
   ${CMAKE_CURRENT_LIST_DIR}/.. # for our common lwipopts or any other standard includes, if required
 )
 
-pico_add_extra_outputs(week1_uart)
+pico_add_extra_outputs(week1_ISR)
 
